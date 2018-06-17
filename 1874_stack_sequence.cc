@@ -1,59 +1,52 @@
-#include <stdio.h>
 #include <iostream>
 #include <stack>
+#include <queue>
 using namespace std;
 
 int main(){
-  //k is for index of list
-  //j is value entering to n
-  int count, num, k=0, j=1, pcnt=0, mcnt=0;
-  int list[10000];
+//cnt is count of loop
+//num is the number entering to arr
+  int cnt, num, index=0;
+  queue<string> op; //for '+' and '-'
+  int arr[1000000]; //for num data
+  int test[1000000]={0,};
   stack<int> n;
-  cin >> count;
+  cin >> cnt;
   //entering the input number in list stack
-  for(int i=0; i<count; i++){
+  for(int i=0; i<cnt; i++){
     cin >> num;
-    if(num > count){
-      cout << "No" << endl;
+    if(test[num-1]==1){
+      cout <<"NO\n";
+      return 0;
+    }else{
+      test[num-1] = 1;
+    }
+    if(num > cnt){
+      cout << "NO\n";
       return 0;
     }
     else{
-      list[i] = num;
+      arr[i] = num;
+      }
     }
-}
 
-  for(int i=0; i<count; i++){
-    n.push(j);
-    pcnt++;
-    while(list[k]==n.top()){
+  for(int i=1; i<=cnt; i++){
+    n.push(i);
+    op.push("+");
+    while(!n.empty() && arr[index]==n.top()){
+      index++;
       n.pop();
-      mcnt++;
-      k++;
+      op.push("-");
     }
-    j++;
   }
-
-  cout << "success" << endl;
-
-  if(pcnt != mcnt){
-  cout << "No" << endl;
-  return 0;
+  if(!n.empty()){
+    cout << "NO\n";
   }
-/*  for(int i=0; i<count; i++){
-    n.push(j+1);
-    cout<<"+"<<endl;
-    while(true){
-      if(list[k] == n.top()){
-        n.pop();
-        cout << "-" << endl;
-        k++;
-      }
-      else{
-        break;
-      }
+  else{
+    while(!op.empty()){
+      cout << op.front() << "\n";
+      op.pop();
     }
-    j++;
   }
-  */
   return 0;
 }
