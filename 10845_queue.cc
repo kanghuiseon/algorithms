@@ -1,32 +1,56 @@
 #include <iostream>
+#include <string>
 using namespace std;
-int front = -1;
-int back = 0;
-int queue[10000000];
+#define MAXSIZE 1000000
+int f = -1;
+int b = -1;
+int queue[MAXSIZE];
+void push(int num);
+int pop();
+int size();
+void empty();
+int front();
+int back();
 
-void push(){
-
+void push(int num){
+  if(b >= MAXSIZE){
+    return;
+  }
+  else{
+    queue[++b] = num;
+  }
 }
 int pop(){
-
+  if(size() == 0){
+    return -1;
+  }
+  else{
+    return queue[++f];
+  }
 }
 int size(){
-
+  return (b-f);
 }
-int empty(){
 
+void empty(){
+  if ((b-f) == 0){
+    cout << "1" << endl;
+  }
+  else{
+    cout << "0" << endl;
+  }
 }
 int front(){
-
+  return queue[f];
 }
 int back(){
-
+  return queue[b];
 }
 
 int main(){
   int cnt, num;
   string cmd;
-
+  cin >> cnt;
   for(int i=0; i<cnt; i++){
     cin >> cmd;
     if(cmd == "push"){
@@ -34,22 +58,23 @@ int main(){
       push(num);
     }
     else if(cmd == "pop"){
-      pop();
+      cout << pop() << endl;
     }
-    else if(cme == "size"){
-      size();
+    else if(cmd == "size"){
+      cout << size() << endl;
     }
     else if(cmd == "empty"){
       empty();
     }
     else if(cmd == "front"){
-      front();
+      cout << front() << endl;
     }
     else if(cmd == "back"){
-      back();
+      cout << back() << endl;
     }
     else{
       return 0;
     }
   }
+  return 0;
 }
