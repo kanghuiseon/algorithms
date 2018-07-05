@@ -41,9 +41,15 @@ void empty(){
   }
 }
 int front(){
-  return queue[f];
+  if((b-f) == 0){
+    return -1;
+  }
+  return queue[f+1];
 }
 int back(){
+  if((b-f) == 0){
+    return -1;
+  }
   return queue[b];
 }
 
