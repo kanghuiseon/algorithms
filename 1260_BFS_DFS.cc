@@ -1,28 +1,60 @@
 #include <iostream>
-#include <stack> //for DFS
 #include <queue> //for BFS
-#include <vector>
-#include <algorithm> //for fill function
+#include <cstring>
 using namespace std;
+const int MAX = 1000 + 1;
+
+int n, m, start;
+bool check[MAX];
+int graph[MAX][MAX]; //for dfs, bfs
+queue<int> q; //for bfs
+//the fuction of DFS
+void dfs(int start){
+    cout << start << " ";
+    for(int i=1; i<=n; i++){
+      if(graph[start][i] && !check[i]){
+        check[i] = 1;
+        dfs(i);
+      }
+    }
+
+}
+//the fuction of BFS
+void bfs(int start){
+  q.push(start);
+  check[start]=1;
+  while(!q.empty()){
+    start = q.front();
+    q.pop();
+    cout << start << " ";
+    for(int i=1; i<=n; i++){
+      if(graph[start][i] && !check[i]){
+        check[i] = 1;
+        q.push(i);
+      }
+    }
+  }
+
+}
 
 int main(){
-  int n, m, start;
   cin >> n >> m >> start;
-  vector<int> list[n+1];
-  bool check[n+1];
-  fill(check, check+n+1, false);
-  for(int i = 0; i<m; i++){
-    int u, v;
+
+  for(int i=0; i<m; i++){
+    int u,v;
     cin >> u >> v;
-
-    list[u].push_back(v);
-    list[v].push_back(u);
-  }
-  for(int i=1; i<=n; i++){
-    sort(list[i].begin(), list[i].end());
+    graph[u][v]=1;
+    graph[v][u]=1;
   }
 
-  dfs(start, list, check);
-  printf("\n");
+  check[start]=1;
+  dfs(start);
+  cout << endl;
+
+  memset(check, false, sizeof(check));
+  bfs(start);
+  cout << endl;
+
+
   return 0;
 }
