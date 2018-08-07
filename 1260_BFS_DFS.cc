@@ -12,7 +12,7 @@ queue<int> q; //for bfs
 void dfs(int start){
     cout << start << " ";
     for(int i=1; i<=n; i++){
-      if(graph[start][i] && !check[i]){
+      if(graph[start][i] && !check[i])
         check[i] = 1;
         dfs(i);
       }
