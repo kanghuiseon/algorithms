@@ -39,7 +39,7 @@ void initialize(){
     temp4->Next = end;
     ptr = temp4;
 }
-
+//Insert node in linked list
 void Insert(Node * ptr){
   Node *Indexptr;
   for(Indexptr=head; Indexptr!=end; Indexptr = Indexptr->Next){
@@ -51,13 +51,29 @@ void Insert(Node * ptr){
   Indexptr->Next = ptr;
 }
 
+void Delete(Node* ptr){
+    Node* indexptr;
+    Node* deleteptr;
+
+    for(indexptr = head; indexptr != end; indexptr = indexptr->Next){
+      if(indexptr->Next->Data == ptr->Data){
+        deleteptr = indexptr->Next;
+        break;
+      }
+    }
+    indexptr->Next = indexptr->Next->Next;
+    free(deleteptr);
+}
+
+
+
 int main(){
   Node* ptr;
   int i=0;
   initialize();
 
   ptr = head->Next;
-
+  printf("Before inserting 'c'\n");
   for(i=0; i<4; i++){
     printf("%2c",ptr->Data);
     ptr = ptr->Next;
@@ -70,7 +86,18 @@ int main(){
   Insert(temp);
 
   ptr = head->Next;
+  printf("After inserting 'c'\n");
   for(i=0; i<5; i++){
+    printf("%2c",ptr->Data);
+    ptr = ptr->Next;
+  }
+  printf("\n");
+
+  Delete(temp);
+  ptr = head->Next;
+
+  printf("After deleting 'c'\n");
+  for(i=0; i<4; i++){
     printf("%2c",ptr->Data);
     ptr = ptr->Next;
   }
