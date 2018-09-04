@@ -1,71 +1,22 @@
-#include <iostream>
-
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Node{
-  int num;
+  int data;
   struct Node *next;
 }node;
 
-class linked_list{
-  node *head, *tail;
-public:
-  linked_list(){
-    head = new node();
-    tail = head;
-    head->next = NULL;
+node *head;
+
+void insert(int N){
+  node *t;
+  int i;
+  t = (node*)malloc(sizeof(node));
+  t->data = 1;
+  he
+  for(i=2; i<=N; i++){
+    t->next = (node*)malloc(sizeof(node));
+
   }
 
-  int empty(){
-    if(head->next == NULL){
-      return 1;
-    }
-    else{
-      return 2;
-    }
-  }
-
-  void add_node(int n){
-      node *tmp = new node();
-      tmp->num = n;
-      tmp->next = NULL;
-
-      tail->next = tmp;
-      tail = tmp;
-  }
-
-  void del_node(int m){
-    int i=0;
-    node *tmp;
-    node *del;
-    while(1){
-      for(tmp=head; tmp != tail; tmp = tmp->next){
-        if(i==m-1){
-          break;
-        }
-        i++;
-      }
-      del = tmp->next;
-      cout << del->num <<", ";
-      tmp->next = tmp->next->next;
-      head = tmp->next;
-      free(del);
-    }
-  }
-};
-
-int main(){
-  int N, M;
-  linked_list list;
-  cin >> N;
-  cin >> M;
-  for(int i=1; i<=N; i++){
-    list.add_node(i);
-  }
-  cout << "<";
-  while(list.empty() != 1){
-    list.del_node(M);
-  }
-  cout << ">";
-  return 0;
 }
