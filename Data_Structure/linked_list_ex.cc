@@ -18,6 +18,7 @@ void PutNode(node* bnode, node* tmpnode, int input){
   New->data = input;
   New->next = bnode->next;
   bnode->next = New;
+  printf(" -> %d\n",New->data);
 }
 
 int main(){
@@ -29,11 +30,10 @@ int main(){
   for(int i=0; ;i++){
     printf("input : ");
     scanf("%d",&input);
+    printf("%d",input);
     if(input == -2){
       break;
     }
     PutNode(bnode, &tmp, input);
-    
-
   }
 }
