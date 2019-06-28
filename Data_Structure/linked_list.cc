@@ -36,7 +36,7 @@ bool DelNode(Node *bNode){
 
 int main(){
   node* bnode;
-  node tmp;
+  node* tmp;
   InitList();
   bnode = head;
   for(int i=1; i<=10; i++){
