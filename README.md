@@ -1,1 +1,1 @@
-This is my practice of algorithm
+This is my practice of algorithms
