@@ -45,6 +45,7 @@ int main(){
         parents[i] = i;
     }
     for(int i=0; i<arr.size(); i++){
+        // 만약 부모가 다르면 합치고 간선을 더한다.
         if(!checkParents(arr[i].second.first, arr[i].second.second)){
             union_find(arr[i].second.first, arr[i].second.second);
             sum += arr[i].first;
