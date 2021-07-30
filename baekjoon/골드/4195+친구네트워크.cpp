@@ -24,16 +24,6 @@ void union_find(int x, int y){
     }
 }
 
-bool checkSameArea(int x, int y){
-    x = findRoot(x);
-    y = findRoot(y);
-    if(x == y){
-        return true;
-    }
-    return false;
-}
-
-
 int main(){
     int t;
     scanf("%d", &t);
