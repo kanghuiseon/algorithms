@@ -22,3 +22,70 @@
 친구가 그럼 체크배열을 초기화하고 다시 bfs를 돌면 어때? 라고 해주지 않았다면 시간이 오래 지나고 난 후에야 풀 수 있었을 것이다….
 
 고착된 방식에서 머물러 있지 않고 방식의 추가나 제거에 대해서 좀 더 넓게 생각해야겠다는 생각(?)을 했다.
+
+
+
+## 15683. 감시 (골드 5)
+처음에는 현재의 cctv위치 사방을 보고 최대로 많이 볼 수 있는 방향으로 cctv의 방향을 설정했다. (모든 cctv에 대해서)
+
+이렇게 하면 현재는 가장 많이 0을 채울 수 있을 지는 몰라도 전체적으로 봤을때는 최적의 답이 아닐 수 있게 된다.
+```cpp
+반례
+4 6
+2 6 0 3 0 2
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 6 1
+8
+```
+
+그래서 dfs를 이용해서 전체의 경우의 수를 봐서 완전탐색으로 문제를 풀었다.
+```cpp
+case 4:
+        fill_cctv(x, y, 0);
+        fill_cctv(x, y, 1);
+        fill_cctv(x, y, 3);
+        dfs(cnt+1);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                arr[i][j] = tmp[i][j];
+            }
+        }
+        fill_cctv(x, y, 0);
+        fill_cctv(x, y, 2);
+        fill_cctv(x, y, 3);
+        dfs(cnt+1);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                arr[i][j] = tmp[i][j];
+            }
+        }
+        fill_cctv(x, y, 0);
+        fill_cctv(x, y, 1);
+        fill_cctv(x, y, 2);
+        dfs(cnt+1);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                arr[i][j] = tmp[i][j];
+            }
+        }
+        fill_cctv(x, y, 1);
+        fill_cctv(x, y, 2);
+        fill_cctv(x, y, 3);
+        dfs(cnt+1);
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                arr[i][j] = tmp[i][j];
+            }
+        }
+        break;
+```
+Cctv 4의 경우만 보자. (0, 1, 2, 3 순서대로 오른쪽, 왼쪽, 아래, 위를 의미)
+
+Cctv4에서 보는 각 방향에 따라서 cctv가 닿는 곳에 -1을 넣어준다.
+그리고나서 Dfs(cnt+1)를 들어가서 다음 cctv를 본다.
+
+dfs가 끝나면 이전의 배열로 다시 만들어주고 다시 다른 방향을 본다. 이렇게 전체 방향에 대한 완전탐색을 진행한다.
+
+
+아직 많이 부족하다!!!!
