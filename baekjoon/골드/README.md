@@ -162,4 +162,10 @@ bool checkLine(int x, int y, int num){
 
 dfs가 끝나면 모음, 자음 갯수 원래대로 해주고 check를 풀어준다.
 
+## 1261. 알고스팟
+### 구현
+Priority queue를 이용한다. 
 
+기존의 Max heap인 pq를 Min heap으로 바꾸고, 벽을 가장 적게 부신 부분이 가장 먼저 나오도록 한다.
+
+나머지는 기본 Bfs와 동일!
