@@ -162,7 +162,7 @@ bool checkLine(int x, int y, int num){
 
 dfs가 끝나면 모음, 자음 갯수 원래대로 해주고 check를 풀어준다.
 
-## 1261. 알고스팟
+## 1261. 알고스팟 (골드 4)
 ### 구현
 Priority queue를 이용한다. 
 
