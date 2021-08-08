@@ -69,24 +69,24 @@ for문을 다 돌고나서 공유기의 수가 c보다 크거나 같다면 공�
 
 ```cpp
 int left = 1; int right = arr.back();
-    int Max = -1;
-    while(left <= right){
-        int mid = (left + right)/2;
-        int start = arr[0];
-        int cnt = 1;
-        for(int i=1; i<arr.size(); i++){
-            if(arr[i]-start >= mid){
-                start = arr[i];
-                cnt++;
-            }
+int Max = -1;
+while(left <= right){
+    int mid = (left + right)/2;
+    int start = arr[0];
+    int cnt = 1;
+    for(int i=1; i<arr.size(); i++){
+        if(arr[i]-start >= mid){
+            start = arr[i];
+            cnt++;
         }
-        if(cnt >= c){
-            left = mid + 1;
-            Max = max(Max, mid);
-        }
-        else{
-            right = mid - 1;
-        }
+    }
+    if(cnt >= c){
+        left = mid + 1;
+        Max = max(Max, mid);
+    }
+    else{
+       right = mid - 1;
+    }
 }
 ```
 
@@ -118,3 +118,47 @@ while(left < right){
         }
 }
 ```
+
+## 2343. 기타 레슨 (실버 1)
+이분 탐색 문제!
+
+이분 탐색의 기준은 블루레이 크기이다.
+
+mid값이 의미하는게 블루레이 크기이고, 레슨의 길이가 블루레이의 크기를 넘기면 다음 블루레이에 레슨을 저장하도록 한다.
+
+만약 모든 레슨을 블루레이에 넣지 않았다면 ( ss != 0 ) 시간이 부족하다는 말이므로 left = mid + 1;이고 모든 레슨이 블루에이에 들어갔다면 시간이 충분하다는 말이므로 시간을 더 줄여본다. (Right = mid) (블루레이의 크기가 최소가 되어야 하므로)
+
+```cpp
+int left = 0, right = Max*n;
+while(left < right){
+    int blue = m;
+    int mid = (left + right) / 2;
+    int s=0; int ss = sum;
+    bool flag = true;
+    for(int i=0; i<arr.size(); i++){
+        if(arr[i] > mid){
+            flag = false;
+        }
+        if(s + arr[i] > mid){
+            blue--;
+            if(blue == 0){
+                break;
+            }
+            s = arr[i];
+            ss -= arr[i];
+        }
+        else{
+            s += arr[i];
+            ss -= arr[i];
+        }
+    }
+    if(ss != 0 || !flag){
+        left = mid + 1;
+    }
+    else{
+        right = mid;
+    }
+}
+```
+### 틀렸습니다.
+만약 레슨의 길이가 시간(mid)보다 길면 어떤 블루레이에도 들어갈 수 없으므로 시간을 늘려야 하는데 이 부분을 빼먹었다.
