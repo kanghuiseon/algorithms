@@ -89,3 +89,32 @@ int left = 1; int right = arr.back();
         }
 }
 ```
+
+## 3079. 입국 심사 (실버 1)
+### 구현
+이분 탐색 문제.
+
+이분 탐색의 기준은 심사를 마치는데 걸리는 시간이다.
+
+Right 값을 심사대의 최댓값에 사람수/심사대수 + 1로 설정했다. (모든 심사대를 최댓값으로 설정하면 사람수/심사대수번 로테이션이 돌기 때문)
+
+mid값의 의미는 전체 심사시간이고, mid/arr[i]의 의미는 심사시간동안 해결할 수 있는 사람의 수이다. 그래서 mid값에 각 심사대의 시간으로 나누는 값을 더한 값이 사람의 수보다 크면 해당 시간 내에 m보다 큰 사람을 수용할 수 있다는 얘기니까 right = mid로 시간을 줄인다. (최소 시간을 원하므로)
+
+이렇게 해서 나온 right값이 정답이다!
+```cpp
+long long int s = Max*(m/n+1);
+long long int left = 0, right = s;
+while(left < right){
+        long long int mid = (left+right)/2;
+        long long int sum = 0;
+        for(int i=0; i<arr.size(); i++){
+            sum += mid/arr[i];
+        }
+        if(sum >= m){
+            right = mid;
+        }
+        else{
+            left = mid + 1;
+        }
+}
+```
