@@ -204,3 +204,54 @@ while(left < right){
 }
 printf("%d %d\n", a, b);
 ```
+
+## 2295. 세 수의 합
+### 구현
+N이 1000이므로 N^2은 시간 초과가 되지 않는다.
+
+여기서 주요할 점은 v[I]+v[j]+v[k] = v[l]을 v[i] + v[j] = v[l] - v[k]로 보는 것이다.
+
+그래서 두 수의 합을 먼저 구하도록 한다.
+
+만약 v[l]-v[k]값이 앞서 구한 합 배열에 존재한다면 세 수의 합이 같은 배열에 존재한다는 얘기이다.
+
+그러기 위해서 v를 내림차순으로 정렬하고 v2(sum 배열)를 오름차순으로 정렬한다.  
+
+v를 내림차순으로 정렬하는 이유는 k번째 수가 가장 큰 수를 먼저 찾기 위해서이다.
+ 
+그리고 binary_search함수를 이용해서 만야 v[i]-v[j]가 v2배열에 존재한다면 바로 출력하고 끝내도록 한다.
+```cpp
+vector<long long int> v2;
+for(int i=0; i<n; i++){
+    for(int j=i; j<n; j++){
+        long long int sum = v[i] + v[j];
+        v2.push_back(sum);
+    }
+}
+sort(v.rbegin(), v.rend());
+sort(v2.begin(), v2.end());
+bool flag = false;
+for(int i=0; i<v.size(); i++){
+    for(int j=i; j<v.size(); j++){
+        if(binary_search(v2.begin(), v2.end(), v[i]-v[j])){
+            printf("%lld\n", v[i]);
+            flag = true;
+            break;
+        }
+    }
+    if(flag)
+        break;
+}
+```
+
+### binary_search 함수
+이진 탐색으로 값의 유무를 찾는 함수이다. 헤더 algorithm에 있다.
+
+binary_search(arr.begin, arr.end, value)
+
+배열 arr에서 찾으려는 value가 있다면 True, 그렇지 않으면 false를 리턴한다.
+
+### 시간 초과
+두 개의 합을 먼저 구하려고 이중 포문 안에 set.insert를 했다.
+
+근데 set.insert가 nlogn이고 이중포문이 n^2이니까 총 n^3long이 걸려서 시간초과가 났다..
