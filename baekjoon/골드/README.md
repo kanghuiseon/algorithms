@@ -169,3 +169,38 @@ Priority queue를 이용한다.
 기존의 Max heap인 pq를 Min heap으로 바꾸고, 벽을 가장 적게 부신 부분이 가장 먼저 나오도록 한다.
 
 나머지는 기본 Bfs와 동일!
+
+## 2467. 용액 (골드 5)
+### 구현
+배열의 가장 첫번째를 left, 마지막을 right으로 설정한다.
+
+만약 arr[left] + arr[right] 의 값이 마이너스이면 left++하고, 플러스이면 right- -를 한다.(값을 더 줄여서 0이랑 가까운 수가 있는지 없는지 체크하기 위함).
+
+값을 비교할 때마다 차이의 최소를 계산해준다.
+
+```cpp
+int Min = 0x7fffffff;
+int a=0, b=0;
+int left = 0, right = arr.size()-1;
+while(left < right){
+    if(arr[left] + arr[right] < 0){
+        if(Min > abs(arr[left]+arr[right])){
+            Min = abs(arr[left] + arr[right]);
+            a = arr[left]; b = arr[right];
+        }
+        left++;
+    }
+    else if(arr[left] + arr[right] > 0){
+        if(Min > abs(arr[left]+arr[right])){
+            Min = abs(arr[left] + arr[right]);
+            a = arr[left]; b = arr[right];
+        }
+        right--;
+    }
+    else{
+        printf("%d %d\n", arr[left], arr[right]);
+        return 0;
+    }
+}
+printf("%d %d\n", a, b);
+```
