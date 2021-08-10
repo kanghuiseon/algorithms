@@ -256,5 +256,41 @@ binary_search(arr.begin, arr.end, value)
 
 근데 set.insert가 nlogn이고 이중포문이 n^2이니까 총 n^3long이 걸려서 시간초과가 났다..
 
-## 2470. 두 용액
+## 2470. 두 용액 (골드 5)
 2467. 용액과 풀이 과정이 똑같음..! 처음에 배열 정렬만 추가해준다.
+
+## 2473. 세 용액 (골드 4)
+가장 바깥쪽에 for문으로 값을 하나 잡고, 그 안에서 left, right 이분 탐색을 진행한다. 
+
+이렇게 되면 바깥 포문 N, 이분 탐색 (정렬 포함) NlogN 이므로 N^2logN이 된다.
+
+그렇게 해서 가장 0에 가까운 세 수를 구한다.
+
+그리고 세 수의 합이라 세 개 다 십억에 가까운 수면 대충 삼십억이 되므로 long long int로 해야 한다.
+
+```cpp
+sort(v.begin(), v.end());
+long long int Min = 1e18;
+long long int a=0, b=0, c=0;
+for(int i=0; i<n-2; i++){
+    long long int mid = v[i];
+    int left = i+1;
+    int right = n-1;
+    while(left < right){
+        if(abs(mid + v[left] + v[right]) < Min){
+            Min = abs(mid + v[left] + v[right]);
+            a=mid; b=v[left]; c=v[right];
+        }
+        if(mid + v[left] + v[right] < 0){
+            left++;
+        }
+        else if(mid + v[left] + v[right] > 0){
+            right--;
+        }
+        else{
+            printf("%lld %lld %lld\n", mid, v[left], v[right]);
+            return 0;
+        }
+    }
+}
+```
