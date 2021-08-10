@@ -255,3 +255,6 @@ binary_search(arr.begin, arr.end, value)
 두 개의 합을 먼저 구하려고 이중 포문 안에 set.insert를 했다.
 
 근데 set.insert가 nlogn이고 이중포문이 n^2이니까 총 n^3long이 걸려서 시간초과가 났다..
+
+## 2470. 두 용액
+2467. 용액과 풀이 과정이 똑같음..! 처음에 배열 정렬만 추가해준다.
