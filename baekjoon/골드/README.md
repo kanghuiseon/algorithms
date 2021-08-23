@@ -366,3 +366,36 @@ int dfs(int cnt, int current){
 
 ### 사담
 디피… 언제쯤 잘하게 될까 아직도 너무 어렵다.
+
+## 1103. 게임 (골드 2)
+DP + DFS 문제
+### 구현
+```cpp
+int dfs(int x, int y){
+    if(dp[x][y] != 0){
+        return dp[x][y];
+    }
+    for(int i=0; i<4; i++){
+        int num = arr[x][y];
+        int nx = x + dx[i]*num;
+        int ny = y + dy[i]*num;
+        if(nx < 0 || nx >= n || ny < 0 || ny >= m || arr[nx][ny] == 0){
+            continue;
+        }
+        if(check[nx][ny]){
+            printf("-1\n");
+            exit(0);
+        }
+        check[nx][ny] = true;
+        dp[x][y] = max(dp[x][y], dfs(nx, ny)+1);
+        check[nx][ny] = false;;
+    }
+    return dp[x][y];
+}
+```
+기본적인 dp + dfs 문제이다. 
+
+여기서 **키 포인트는** 갔던 길을 다시 갔는지를 체크하는 것이다. 만약 방문한 곳을 다시 한번 더 방문했다면 동전을 무한히 움직일 수 있다는 얘기니까 바로 -1 을 출력하고 끝내도록 한다.
+
+ 
+
