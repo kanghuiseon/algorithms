@@ -333,3 +333,36 @@ for(int i=0; i<coins.size(); i++){
 ```
 
 [얍문's Coding World..](https://yabmoons.tistory.com/556) 이분께 받았다!
+
+## 2157. 여행 (골드4)
+### 구현
+dp[i][j]가 의미하는 것은 i번째 도시를 j번째로 도착했을때의 기내식 점수이다.
+```cpp
+int dfs(int cnt, int current){
+    if(current == n){
+        return 0;
+    }
+    if(cnt == m){
+        return -MAX;
+    }
+    if(dp[current][cnt] != 0){
+        return dp[current][cnt];
+    }
+    dp[current][cnt] = -MAX;
+    for(int i=0; i<v[current].size(); i++){
+        int next = v[current][i].first;
+        int c = v[current][i].second;
+        dp[current][cnt] = max(dp[current][cnt], dfs(cnt+1, next) + c);
+    }
+    return dp[current][cnt];
+}
+```
+1. 현재 위치가 목적지이면 0을 리턴한다.
+2. 목적지가 아닌데 방문한 도시의 수가 m이 되면 최저 값을 리턴한다.
+3. 만약 현재 디피의 값이 0이 아니면 최대 기내식 점수가 있다는 말이므로 그 값을 리턴한다.
+4. 그렇지 않으면 최저 값을 저장한다.
+5. 현재 도시에서 갈 수 있는 도시들을 하나 씩 본다. 현재 디피의 값에는 현재의 값과 다음 목적지의 값에 다음 목적지의 기내식 값을 더한 값 중 **최대 값** 을 저장한다.
+6. dp[1][1]에는 기내식의 가장 최대값이 저장될 것이다.
+
+### 사담
+디피… 언제쯤 잘하게 될까 아직도 너무 어렵다.
