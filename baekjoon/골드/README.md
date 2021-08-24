@@ -440,4 +440,40 @@ int dfs(int x, int y){
 만약 범위를 벗어나면 1을 리턴하고 현재 위치가 이미 방문한 곳이면 바로 디피의 값을 리턴한다.
 
 
+## 22254. 공정 컨설턴트 호석 (골드 4) 
+이분탐색의 기준을 공정 라인의 수이다.
+
+처음에는 mid값 크기의 배열을 새로 만들어서 작은곳을 계속 찾는? 방법으로 코드를 짜려고했는데 너무 비효율적인것 같다고 생각을 했다. (시간초과도 남 : 십만X십만이니까)
+
+그래서 priority_queue를 이용해서 가장 작은 값을 뽑아서 그곳에다가 현재 공정의 시간을 더한 값을 더해서 다시 pq에 넣어주는 식으로 했다.
+
+```cpp
+bool process(int cnt){
+    priority_queue<int, vector<int>, greater<int>> pq;
+    for(int i=0; i<cnt; i++){
+        pq.push(0);
+    }
+    for(int i=0; i<n; i++){
+        int t = pq.top();
+        pq.pop();
+        pq.push(t+arr[i]);
+    }
+    int Max = 0;
+    while(!pq.empty()){
+        Max = pq.top();
+        pq.pop();
+    }
+    if(Max > x){
+        return false;
+    }else{
+        return true;
+    }
+}
+```
+1. 기존의 pq는 maxheap이니까 minheap으로 바꾸기 위해 greater조건을 넣었다.
+2. 공정 라인 개수만큼 pq에 넣고 top을 빼서 거기에 현재 시간을 더해서 pq에 다시 넣는다. 이 과정을 n번 한다. (top의 값은 가장 작은 값임)
+3. 그리고 pq의 가장 마지막 값(가장 큰 값)을 뽑고, 이 값이 x(시간 제한)보다 크면 false를 리턴하고 그렇지 않으면 true를 리턴한다.
+
+### 사담
+가장 작은 값을 다루는 문제가 나온다면 priority_queue를 사용하는 방법을 생각해보자!
 
