@@ -508,3 +508,67 @@ for(int i=1; i<=n; i++){
 }
 ```
 
+## 1504. 특정한 최단 경로 (골드 4)
+### 구현
+1, v1, v2, n 이 네 가지 노드는 무조건 지나야 해서 처음에는 priority_queue에 1을 지났는지, v1을 지났는지, v2를 지났는지를 체크하는? 방식으로 진행을 했었는데, 메모리 초과가 계속 났다…
+
+추측해보자면, queue에 너무 많이 들어갔거나..하는 이유인거 같은데 도저히 모르겠어서 
+
+1->v1->v2->n or 1->v2->v1->n 이렇게는 무조건 나와야 하니까
+
+각각의 경우에 대해서 다익스트라를 구현하는 방식으로 다시 코드를 바꿨다.
+
+1->v1, v1->v2, v2->n, 1->v2, v1->n 이렇게 구했다. (V2->v1을 구하지 않은 이유가 양방향이어서 굳이 구할 필요가 없기 때문이다!)
+
+그래서 1->v1->v2->n or 1->v2->v1->n 둘 중에 가장 거리가 짧은 값을 Min 변수에 넣고 
+
+v1->v2가 무한대거나 (v1, v2가 이어지지 않은 경우), Min값이 MAX인 경우(1에서 n까지 못가는 경우) 에는 -1을 출력하고 그렇지 않으면 거리를 출력하도록 했다.
+
+### Dijkstra 코드
+```cpp
+void dijkstra(int start){
+    for(int i=1; i<=n; i++){
+        dp[i] = MAX;
+    }
+    priority_queue<tt, vector<tt>, greater<tt>> pq;
+    pq.push(make_pair(0, start));
+    dp[start] = 0;
+    while(!pq.empty()){
+        int distance = get<0>(pq.top());
+        int node = get<1>(pq.top());
+        pq.pop();
+        for(int i=0; i<arr[node].size(); i++){
+            int nextNode = arr[node][i].first;
+            int nextDistance = arr[node][i].second;
+            if(dp[nextNode] > distance + nextDistance){
+                dp[nextNode] = distance + nextDistance;
+                pq.push(make_pair(distance + nextDistance, nextNode));
+            }
+        }
+    }
+}
+```
+
+### main 코드
+```cpp
+dijkstra(1);
+int oneToV1 = dp[v1];
+int oneToV2 = dp[v2];
+
+dijkstra(v1);
+int v1ToV2 = dp[v2];
+int v1ToN = dp[n];
+
+dijkstra(v2);
+int v2ToN = dp[n];
+
+int Min = MAX;
+Min = min(Min, oneToV1 + v1ToV2 + v2ToN);
+Min = min(Min, oneToV2 + v1ToV2 + v1ToN);
+if(Min == MAX || v1ToV2 == MAX)
+    printf("-1\n");
+else{
+    printf("%d\n", Min);
+}
+```
+
