@@ -22,10 +22,10 @@ void dfs(int cnt, string s, string current, int index){
 }
 vector<string> solution(vector<string> orders, vector<int> course) {
     vector<string> answer;
+    string alpha = "";
     for(int i=0; i<orders.size(); i++){
         sort(orders[i].begin(), orders[i].end());
     }
-    string alpha = "";
     for(int i=0; i<orders.size(); i++){
         for(int j=0; j<orders[i].size(); j++){
             if(alpha.find(orders[i][j]) == string::npos){
@@ -71,12 +71,4 @@ vector<string> solution(vector<string> orders, vector<int> course) {
     }
     sort(answer.begin(), answer.end());
     return answer;
-}
-
-int main(){
-    vector<string> answer = solution({"ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"}, {2,3,4});
-    for(int i=0; i<answer.size(); i++){
-        cout << answer[i] << endl;
-    }
-    return 0;
 }
