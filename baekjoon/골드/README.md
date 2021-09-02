@@ -572,3 +572,27 @@ else{
 }
 ```
 
+# 1719. 택배 (골드4)
+플로이드 와샬 문제!
+
+어떤 노드를 거쳐가는 값이 현재 위치의 값보다 작을 때, 거쳐가는 k값을 저장해준다.
+
+만약 k를 거쳐가기 전에 거쳐간 노드가 존재한다면 그 노드의 숫자를 저장한다.
+
+(if(arr[i][k] != MAX)	factory[i][j] = factory[i][k];)
+```cpp
+for(int k=1; k<=n; k++){
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            if(arr[i][j] > arr[i][k] + arr[k][j]){
+                arr[i][j] = arr[i][k] + arr[k][j];
+                if(arr[i][k] != MAX){
+                    factory[i][j] = factory[i][k];
+                }else{
+                    factory[i][j] = k;
+                }
+            }
+        }
+    }
+}
+```
