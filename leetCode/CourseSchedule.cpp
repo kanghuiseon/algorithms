@@ -1,16 +1,22 @@
+#include <queue>
+#include <cstring>
 class Solution {
 public:
     vector<int> check;
     vector<vector<int>> arr;
     bool checkCycle(int node){
+        // 0 : 아직 한번도 방문 안한것, 1 : 한번 방문한 적이 있던것, 2 : 방문한것
+        // 연결된 노드의 체크 값이 2이면 사이클이 존재한다는 의미
         check[node] = 2;
         for(int i=0; i<arr[node].size(); i++){
-            if(check[arr[node][i]] == 2){
+            int neighbor = arr[node][i];
+            if(check[neighbor] == 2){ // 사이클이 존재하는 경우
                 return true;
-            }else if(check[arr[node][i]] == 0 && checkCycle(arr[node][i])){
+            }else if(check[neighbor] == 0 && checkCycle(neighbor)){ // 한번도 방문 안했지만 사이클이 존재하는 경우
                 return true;
             }
         }
+        // 1로 설정해줘야 함
         check[node] = 1;
         return false;
     }
